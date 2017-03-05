@@ -1,14 +1,15 @@
 <?php
 
-namespace League\Skeleton;
+namespace Dwr\GameOfLive;
 
 class ExampleTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test that true does in fact equal true
-     */
-    public function testTrueIsTrue()
+
+    public function testBoardDimension()
     {
-        $this->assertTrue(true);
+        $dimension = 3;
+        $board = new Board($dimension);
+        $this->assertEquals($dimension, $board->getDimension);
     }
+
 }
