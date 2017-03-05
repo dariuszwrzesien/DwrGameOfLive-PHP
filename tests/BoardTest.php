@@ -1,15 +1,30 @@
 <?php
+declare(strict_types=1);
 
 namespace Dwr\GameOfLive;
 
-class ExampleTest extends \PHPUnit_Framework_TestCase
+use LogicException;
+
+class BoardTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBoardDimension()
     {
-        $dimension = 3;
+        $dimension = new Dimension(3, 4);
         $board = new Board($dimension);
-        $this->assertEquals($dimension, $board->getDimension);
+
+        $this->assertInstanceOf(Dimension::class, $board->dimension());
+        $this->assertEquals($dimension, $board->dimension());
+        $this->assertTrue($dimension->equals($board->dimension()));
     }
 
+    /**
+     * @expectedException LogicException
+     * @expectedExceptionMessage Minimum length: 3. Minimum width: 3.
+     */
+    public function testUnderMinimumBoardDimensionThrowsException()
+    {
+        $dimension = new Dimension(2, 2);
+        new Board($dimension);
+    }
 }
