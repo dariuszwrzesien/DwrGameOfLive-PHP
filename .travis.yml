@@ -4,6 +4,8 @@ php:
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev
-script: phpunit -c .
+script:
+  - phpunit -c .
+  - php composer.phar check-style
 after_script:
   - php vendor/bin/coveralls
