@@ -1,0 +1,9 @@
+language: php
+php:
+  - 7.0
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev
+script: phpunit -c .
+after_script:
+  - php vendor/bin/coveralls
