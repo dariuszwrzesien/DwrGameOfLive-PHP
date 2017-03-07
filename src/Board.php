@@ -42,7 +42,7 @@ class Board
      * @param Dimension $dimension
      * @return bool
      */
-    private function isMinDimension(Dimension $dimension)
+    private function isMinDimension(Dimension $dimension):bool
     {
         if ($dimension->length() < self::MIN_LENGTH) {
             return false;
