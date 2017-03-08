@@ -1,12 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace Dwr\GameOfLive;
+namespace Dwr\GameOfLive\ValueObject;
 
-class Position
+use LogicException;
+use RuntimeException;
+
+final class Position implements ValueObjectInterface
 {
+    /**
+     * @var array
+     */
     private $coordinate;
 
+    /**
+     * Position constructor.
+     * @param int $latitude
+     * @param int $longitude
+     *
+     * @throws LogicException
+     */
     public function __construct(int $latitude, int $longitude)
     {
         if ($this->isAvailablePosition($latitude, $longitude)) {
@@ -20,33 +33,58 @@ class Position
         ];
     }
 
+    /**
+     * @param int $latitude
+     * @param int $longitude
+     * @return bool
+     */
     private function isAvailablePosition(int $latitude, int $longitude) : bool
     {
         return $latitude <= 0 && $longitude <= 0;
     }
 
+    /**
+     * @return int
+     */
     public function latitude() : int
     {
         return $this->coordinate['latitude'];
     }
 
+    /**
+     * @return int
+     */
     public function longitude() : int
     {
         return $this->coordinate['longitude'];
     }
 
+    /**
+     * @return array
+     */
     public function coordinate() : array
     {
         return $this->coordinate;
     }
 
     /**
-     * @param position $object
+     * @param ValueObjectInterface $object
      * @return bool
      */
-    public function equals(Position $object) : bool
+    public function equals(ValueObjectInterface $object) : bool
     {
+        if (! $this->isPosition($object)) {
+            throw new RuntimeException(
+                "Passed value object has to be instance of Position"
+            );
+        }
+
         return $this->latitude() === $object->latitude() && $this->longitude() === $object->longitude();
+    }
+
+    private function isPosition(ValueObjectInterface $object)
+    {
+        return $object instanceof Position;
     }
 
     /**

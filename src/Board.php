@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Dwr\GameOfLive;
 
 use LogicException;
+use Dwr\GameOfLive\ValueObject\Dimension;
 
 class Board
 {
@@ -21,7 +22,7 @@ class Board
      */
     public function __construct(Dimension $dimension)
     {
-        if (! $this->isMinDimension($dimension)) {
+        if (! $this->isMinBoard($dimension)) {
             throw new LogicException(
                 "Minimum length: " . self::MIN_LENGTH .
                 ". Minimum width: " . self::MIN_WIDTH . "."
@@ -42,7 +43,7 @@ class Board
      * @param Dimension $dimension
      * @return bool
      */
-    private function isMinDimension(Dimension $dimension):bool
+    private function isMinBoard(Dimension $dimension):bool
     {
         if ($dimension->length() < self::MIN_LENGTH) {
             return false;

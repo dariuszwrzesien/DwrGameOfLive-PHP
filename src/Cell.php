@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive;
 
+use Dwr\GameOfLive\ValueObject\Position;
+
 class Cell
 {
     /**

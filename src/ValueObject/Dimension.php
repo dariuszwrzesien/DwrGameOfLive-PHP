@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Dwr\GameOfLive;
+namespace Dwr\GameOfLive\ValueObject;
 
-final class Dimension
+final class Dimension implements ValueObjectInterface
 {
     /**
      * @var int
@@ -43,12 +43,27 @@ final class Dimension
     }
 
     /**
-     * @param Dimension $object
+     * @param ValueObjectInterface $object
      * @return bool
      */
-    public function equals(Dimension $object) : bool
+    public function equals(ValueObjectInterface $object) : bool
     {
+        if (! $this->isDimension($object)) {
+            throw new RuntimeException(
+                "Passed value object has to be instance of Dimension"
+            );
+        }
+
         return $this->length === $object->length && $this->width === $object->width;
+    }
+
+    /**
+     * @param ValueObjectInterface $object
+     * @return bool
+     */
+    private function isDimension(ValueObjectInterface $object)
+    {
+        return $object instanceof Dimension;
     }
 
     /**

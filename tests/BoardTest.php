@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Dwr\GameOfLive;
 
 use LogicException;
+use Dwr\GameOfLive\ValueObject\Dimension;
 
 class BoardTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,7 @@ class BoardTest extends \PHPUnit_Framework_TestCase
      * @expectedException LogicException
      * @expectedExceptionMessage Minimum length: 3. Minimum width: 3.
      */
-    public function testUnderMinimumBoardDimensionThrowsException()
+    public function testIfMinimumBoardDimensionThrowsException()
     {
         $dimension = new Dimension(2, 2);
         new Board($dimension);
