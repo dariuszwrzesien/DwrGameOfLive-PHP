@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive;
 
-use LogicException;
+use Dwr\GameOfLive\Policy\BoardPolicy;
 use Dwr\GameOfLive\ValueObject\Dimension;
+use LogicException;
 
-class Board
+class Board implements BoardPolicy
 {
     const MIN_LENGTH = 3;
     const MIN_WIDTH = 3;
@@ -22,7 +23,7 @@ class Board
      */
     public function __construct(Dimension $dimension)
     {
-        if (! $this->isMinBoard($dimension)) {
+        if (! $this->isMinimumSize($dimension)) {
             throw new LogicException(
                 "Minimum length: " . self::MIN_LENGTH .
                 ". Minimum width: " . self::MIN_WIDTH . "."
@@ -34,7 +35,7 @@ class Board
     /**
      * @return Dimension
      */
-    public function dimension():Dimension
+    public function dimension() : Dimension
     {
         return $this->dimension;
     }
@@ -43,13 +44,13 @@ class Board
      * @param Dimension $dimension
      * @return bool
      */
-    private function isMinBoard(Dimension $dimension):bool
+    public function isMinimumSize(Dimension $dimension) : bool
     {
-        if ($dimension->length() < self::MIN_LENGTH) {
+        if ($dimension->length()->value() < self::MIN_LENGTH) {
             return false;
         }
 
-        if ($dimension->width() < self::MIN_WIDTH) {
+        if ($dimension->width()->value() < self::MIN_WIDTH) {
             return false;
         }
 

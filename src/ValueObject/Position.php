@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\ValueObject;
 
-use LogicException;
-use RuntimeException;
-
 final class Position implements ValueObjectInterface
 {
     /**
@@ -15,18 +12,11 @@ final class Position implements ValueObjectInterface
 
     /**
      * Position constructor.
-     * @param int $latitude
-     * @param int $longitude
-     *
-     * @throws LogicException
+     * @param Latitude $latitude
+     * @param Longitude $longitude
      */
-    public function __construct(int $latitude, int $longitude)
+    public function __construct(Latitude $latitude, Longitude $longitude)
     {
-        if ($this->isAvailablePosition($latitude, $longitude)) {
-            throw new LogicException(
-                "Latitude and longitude cannot be less than 0."
-            );
-        }
         $this->coordinate = [
             'latitude' => $latitude,
             'longitude' => $longitude
@@ -34,27 +24,17 @@ final class Position implements ValueObjectInterface
     }
 
     /**
-     * @param int $latitude
-     * @param int $longitude
-     * @return bool
+     * @return Latitude
      */
-    private function isAvailablePosition(int $latitude, int $longitude) : bool
-    {
-        return $latitude <= 0 && $longitude <= 0;
-    }
-
-    /**
-     * @return int
-     */
-    public function latitude() : int
+    public function latitude() : Latitude
     {
         return $this->coordinate['latitude'];
     }
 
     /**
-     * @return int
+     * @return Longitude
      */
-    public function longitude() : int
+    public function longitude() : Longitude
     {
         return $this->coordinate['longitude'];
     }
@@ -73,18 +53,11 @@ final class Position implements ValueObjectInterface
      */
     public function equals(ValueObjectInterface $object) : bool
     {
-        if (! $this->isPosition($object)) {
-            throw new RuntimeException(
-                "Passed value object has to be instance of Position"
-            );
+        if ($object instanceof Position) {
+            return $this->latitude() === $object->latitude() && $this->longitude() === $object->longitude();
         }
 
-        return $this->latitude() === $object->latitude() && $this->longitude() === $object->longitude();
-    }
-
-    private function isPosition(ValueObjectInterface $object)
-    {
-        return $object instanceof Position;
+        return false;
     }
 
     /**
@@ -92,6 +65,6 @@ final class Position implements ValueObjectInterface
      */
     public function __toString() : string
     {
-        return (string) $this->latitude() . ", " . (string) $this->longitude();
+        return sprintf('%s, %s', $this->latitude(), $this->longitude());
     }
 }

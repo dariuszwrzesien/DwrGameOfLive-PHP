@@ -6,38 +6,38 @@ namespace Dwr\GameOfLive\ValueObject;
 final class Dimension implements ValueObjectInterface
 {
     /**
-     * @var int
+     * @var Length
      */
     private $length;
 
     /**
-     * @var int
+     * @var Width
      */
     private $width;
 
     /**
      * Dimension constructor.
-     * @param int $length
-     * @param int $width
+     * @param Length $length
+     * @param Width $width
      */
-    public function __construct(int $length, int $width)
+    public function __construct(Length $length, Width $width)
     {
         $this->length = $length;
         $this->width = $width;
     }
 
     /**
-     * @return int
+     * @return Length
      */
-    public function length() : int
+    public function length() : Length
     {
         return $this->length;
     }
 
     /**
-     * @return int
+     * @return Width
      */
-    public function width() : int
+    public function width() : Width
     {
         return $this->width;
     }
@@ -48,22 +48,11 @@ final class Dimension implements ValueObjectInterface
      */
     public function equals(ValueObjectInterface $object) : bool
     {
-        if (! $this->isDimension($object)) {
-            throw new RuntimeException(
-                "Passed value object has to be instance of Dimension"
-            );
+        if ($object instanceof Dimension) {
+            return $this->length->equals($object->length) && $this->width->equals($object->width);
         }
 
-        return $this->length === $object->length && $this->width === $object->width;
-    }
-
-    /**
-     * @param ValueObjectInterface $object
-     * @return bool
-     */
-    private function isDimension(ValueObjectInterface $object)
-    {
-        return $object instanceof Dimension;
+        return false;
     }
 
     /**
@@ -71,6 +60,6 @@ final class Dimension implements ValueObjectInterface
      */
     public function __toString() : string
     {
-        return (string) $this->length . "&lowast;" . (string) $this->width;
+        return sprintf('%s&lowast;%s', $this->length->__toString(), $this->width->__toString());
     }
 }
