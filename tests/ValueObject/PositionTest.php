@@ -7,8 +7,16 @@ class PositionTest extends \PHPUnit_Framework_TestCase
 {
     public function testPosition()
     {
-//        $position = new Position(1, 2);
+        $latitude = new Latitude(10);
+        $longitude = new Longitude(15);
+        $position = new Position($latitude, $longitude);
 
+        $this->assertSame($latitude, $position->latitude());
+        $this->assertSame($longitude, $position->longitude());
+
+        $positionCoordinate = $position->coordinate();
+        $this->assertSame($latitude, $positionCoordinate['latitude']);
+        $this->assertSame($longitude, $positionCoordinate['longitude']);
     }
 
     public function testPositionToString()

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\ValueObject;
 
+use InvalidArgumentException;
+
 class Natural
 {
     /**
@@ -23,9 +25,11 @@ class Natural
                 'min_range' => 0
             )
         );
+
         $value = filter_var($value, FILTER_VALIDATE_INT, $options);
+
         if (false === $value) {
-            throw new InvalidNativeArgumentException($value, array('int (>=0)'));
+            throw new InvalidArgumentException('Natural value has to be equal or greater than 0.');
         }
 
         $this->value = $value;

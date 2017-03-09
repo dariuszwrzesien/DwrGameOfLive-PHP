@@ -19,14 +19,8 @@ class DimensionTest extends \PHPUnit_Framework_TestCase
 
     public function testIfDimensionNotEquals()
     {
-        $length1 = new Length(3);
-        $width1 = new Width(4);
-
-        $length2 = new Length(4);
-        $width2 = new Width(5);
-
-        $dimension = new Dimension($length1, $width1);
-        $otherDimension = new Dimension($length2, $width2);
+        $dimension = new Dimension(new Length(3), new Width(4));
+        $otherDimension = new Dimension(new Length(4), new Width(5));
 
         $this->assertFalse($dimension->equals($otherDimension));
     }
