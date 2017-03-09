@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\ValueObject;
 
-class DimensionTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class DimensionTest extends TestCase
 {
 
     public function testIfDimensionEquals()

@@ -5,10 +5,11 @@ namespace Dwr\GameOfLive;
 
 use Dwr\GameOfLive\ValueObject\Length;
 use Dwr\GameOfLive\ValueObject\Width;
-use LogicException;
 use Dwr\GameOfLive\ValueObject\Dimension;
+use LogicException;
+use PHPUnit\Framework\TestCase;
 
-class BoardTest extends \PHPUnit_Framework_TestCase
+class BoardTest extends TestCase
 {
 
     public function testBoardDimension()
