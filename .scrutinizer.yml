@@ -18,4 +18,3 @@ tools:
         excluded_dirs: [vendor]
     php_cpd:
         enabled: true
-excluded_dirs: [vendor]
