@@ -7,9 +7,8 @@ use Dwr\GameOfLive\ValueObject\Length;
 use Dwr\GameOfLive\ValueObject\Width;
 use Dwr\GameOfLive\ValueObject\Dimension;
 use LogicException;
-use PHPUnit\Framework\TestCase;
 
-class BoardTest extends TestCase
+class BoardTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBoardDimension()

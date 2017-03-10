@@ -2,9 +2,7 @@
 
 namespace Dwr\GameOfLive\ValueObject;
 
-use PHPUnit\Framework\TestCase;
-
-class PositionTest extends TestCase
+class PositionTest extends \PHPUnit_Framework_TestCase
 {
     public function testPosition()
     {
