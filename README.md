@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/dariuszwrzesien/DwrGameOfLive-PHP.svg?branch=master)](https://travis-ci.org/dariuszwrzesien/DwrGameOfLive-PHP)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dariuszwrzesien/DwrGameOfLive-PHP/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dariuszwrzesien/DwrGameOfLive-PHP/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/dariuszwrzesien/DwrGameOfLive-PHP/badge.svg?branch=master)](https://coveralls.io/github/dariuszwrzesien/DwrGameOfLive-PHP?branch=master)
 
 # Game of live
