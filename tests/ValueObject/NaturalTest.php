@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\ValueObject;
 
-use InvalidArgumentException;
+//use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class NaturalTest extends TestCase
@@ -24,13 +24,13 @@ class NaturalTest extends TestCase
         $this->assertSame($int, $natural->value());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Natural value has to be equal or greater than 0.
-     */
-    public function testNaturalNegativeThrowException()
-    {
-        $int = -123;
-        new Natural($int);
-    }
+//    /**
+//     * @expectedException InvalidArgumentException
+//     * @expectedExceptionMessage Natural value has to be equal or greater than 0.
+//     */
+//    public function testNaturalNegativeThrowException()
+//    {
+//        $int = -123;
+//        new Natural($int);
+//    }
 }
