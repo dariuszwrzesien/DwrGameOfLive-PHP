@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Dwr\GameOfLive\ValueObject;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class NaturalTest extends \PHPUnit_Framework_TestCase
+class NaturalTest extends TestCase
 {
     public function testNaturalPositiveInt()
     {
