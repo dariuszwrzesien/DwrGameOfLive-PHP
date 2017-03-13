@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Dwr\GameOfLive;
+namespace Dwr\GameOfLive\Entity;
 
 use Dwr\GameOfLive\ValueObject\Latitude;
 use Dwr\GameOfLive\ValueObject\Longitude;

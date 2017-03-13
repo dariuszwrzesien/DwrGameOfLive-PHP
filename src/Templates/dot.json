@@ -1,0 +1,12 @@
+{
+    "board": {
+        "length": 3,
+        "width": 3
+    },
+    "layout": {
+        "1": {
+          "lat": 2,
+          "long": 2
+        }
+    }
+}

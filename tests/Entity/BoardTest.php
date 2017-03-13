@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Dwr\GameOfLive;
+namespace Dwr\GameOfLive\Entity;
 
 use Dwr\GameOfLive\ValueObject\Length;
 use Dwr\GameOfLive\ValueObject\Width;
@@ -43,6 +43,9 @@ class BoardTest extends TestCase
         new Board($dimension);
     }
 
+    /**
+     * @return array
+     */
     public function minimumBoardProvider()
     {
         return [
