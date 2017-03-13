@@ -28,13 +28,33 @@ class BoardTest extends TestCase
     /**
      * @expectedException LogicException
      * @expectedExceptionMessage Minimum length: 3. Minimum width: 3.
+     *
+     * @dataProvider minimumBoardProvider
+     *
+     * @param $length
+     * @param $width
      */
-    public function testIfMinimumBoardSizeThrowsException()
+    public function testIfMinimumBoardSizeThrowsException($length, $width)
     {
-        $length = new Length(2);
-        $width = new Width(2);
+        $length = new Length($length);
+        $width = new Width($width);
 
         $dimension = new Dimension($length, $width);
         new Board($dimension);
+    }
+
+    public function minimumBoardProvider()
+    {
+        return [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [1, 1],
+            [2, 1],
+            [3, 1],
+            [2, 2],
+            [2, 3],
+        ];
     }
 }

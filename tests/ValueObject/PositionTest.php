@@ -21,6 +21,32 @@ class PositionTest extends TestCase
         $this->assertSame($longitude, $positionCoordinate['longitude']);
     }
 
+    public function testPositionEquals()
+    {
+        $latitude = new Latitude(10);
+        $longitude = new Longitude(15);
+        $position1 = new Position($latitude, $longitude);
+        $position2 = new Position($latitude, $longitude);
+
+        $this->assertTrue($position1->equals($position2));
+    }
+
+    public function testPositionNotEquals()
+    {
+        $position1 = new Position(new Latitude(10), new Longitude(15));
+        $position2 = new Position(new Latitude(0), new Longitude(1));
+
+        $this->assertFalse($position1->equals($position2));
+    }
+
+    public function testPositionNotEqualsWhenWrongInstance()
+    {
+        $position = new Position(new Latitude(10), new Longitude(15));
+        $dimension = new Dimension(new Length(10), new Width(15));
+
+        $this->assertFalse($position->equals($dimension));
+    }
+
     public function testPositionToString()
     {
         $latitude = new Latitude(0);

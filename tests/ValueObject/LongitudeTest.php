@@ -23,6 +23,14 @@ class LongitudeTest extends TestCase
         $this->assertFalse($longitude1->equals($longitude2));
     }
 
+    public function testLongitudeNotEqualsWhenWrongInstance()
+    {
+        $longitude = new Longitude(10);
+        $latitude = new Latitude(10);
+
+        $this->assertFalse($longitude->equals($latitude));
+    }
+
     public function testLongitudeToString()
     {
         $longitude = new Longitude(100);
