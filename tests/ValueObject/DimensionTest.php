@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\ValueObject;
 
-class DimensionTest extends \PHPUnit_Framework_TestCase
-{
+use PHPUnit\Framework\TestCase;
 
+class DimensionTest extends TestCase
+{
     public function testIfDimensionEquals()
     {
         $length = new Length(3);
@@ -31,6 +32,6 @@ class DimensionTest extends \PHPUnit_Framework_TestCase
         $width = new Width(4);
 
         $dimension = new Dimension($length, $width);
-        $this->assertSame('3&lowast;4', $dimension->__toString());
+        $this->assertSame('3&lowast;4', (string) $dimension);
     }
 }

@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\ValueObject;
 
-class PositionTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class PositionTest extends TestCase
 {
     public function testPosition()
     {
@@ -25,6 +27,6 @@ class PositionTest extends \PHPUnit_Framework_TestCase
         $longitude = new Longitude(5);
 
         $position = new Position($latitude, $longitude);
-        $this->assertSame('0, 5', $position->__toString());
+        $this->assertSame('0, 5', (string) $position);
     }
 }

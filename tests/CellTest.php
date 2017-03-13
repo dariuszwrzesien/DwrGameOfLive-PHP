@@ -6,8 +6,9 @@ namespace Dwr\GameOfLive;
 use Dwr\GameOfLive\ValueObject\Latitude;
 use Dwr\GameOfLive\ValueObject\Longitude;
 use Dwr\GameOfLive\ValueObject\Position;
+use PHPUnit\Framework\TestCase;
 
-class CellTest extends \PHPUnit_Framework_TestCase
+class CellTest extends TestCase
 {
     public function testCellLive()
     {
