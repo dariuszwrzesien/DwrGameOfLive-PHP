@@ -7,6 +7,7 @@ use Dwr\GameOfLive\Factory\BoardFactory;
 
 class Template implements ValidateInterface
 {
+
     private $layout;
 
     private $board;

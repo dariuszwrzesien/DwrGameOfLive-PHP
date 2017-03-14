@@ -14,8 +14,8 @@ class BoardFactory
      */
     public static function createBoard(array $data)
     {
-        $length = new Length($data['board'][0]);
-        $width = new Length($data['board'][1]);
+        $length = new Length($data['length']);
+        $width = new Width($data['width']);
         $dimension = new Dimension($length, $width);
 
         return new Board($dimension);
