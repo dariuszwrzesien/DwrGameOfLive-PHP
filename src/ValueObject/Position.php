@@ -54,9 +54,8 @@ final class Position implements ValueObjectInterface
     public function equals(ValueObjectInterface $object) : bool
     {
         if ($object instanceof Position) {
-            return $this->latitude() === $object->latitude() && $this->longitude() === $object->longitude();
+            return $this->latitude()->equals($object->latitude()) && $this->longitude()->equals($object->longitude());
         }
-
         return false;
     }
 

@@ -4,5 +4,5 @@ namespace Dwr\GameOfLive\Entity;
 
 interface ValidateInterface
 {
-    public function isValid() : bool;
+    public function isValid(string $json) : bool;
 }
