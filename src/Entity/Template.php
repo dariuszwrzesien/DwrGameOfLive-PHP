@@ -40,7 +40,7 @@ class Template implements ValidateInterface
      */
     public function layout() : Layout
     {
-        return $this->layout();
+        return $this->layout;
     }
 
     /**
@@ -48,14 +48,14 @@ class Template implements ValidateInterface
      */
     public function board() : Board
     {
-        return $this->board();
+        return $this->board;
     }
 
     /**
-     * @param string $json
+     * @param array $data
      * @return bool
      */
-    public function isValid(string $json) : bool
+    public function isValid(array $data) : bool
     {
         //Implemenntacja walidacji
         return true;

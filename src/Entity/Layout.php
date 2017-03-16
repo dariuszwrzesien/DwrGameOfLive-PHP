@@ -17,6 +17,7 @@ class Layout
      */
     public function __construct(array $layout)
     {
+        $this->cells = [];
         foreach ($layout as $key => $item) {
             $this->cells[] = CellFactory::createCell($item);
         }
@@ -25,7 +26,7 @@ class Layout
     /**
      * @return array
      */
-    public function getCells()
+    public function getCells() : array
     {
         return $this->cells;
     }

@@ -2,9 +2,10 @@
 
 namespace Dwr\GameOfLive\Factory;
 
-use Dwr\GameOfLive\Board;
+use Dwr\GameOfLive\Entity\Board;
 use Dwr\GameOfLive\ValueObject\Dimension;
 use Dwr\GameOfLive\ValueObject\Length;
+use Dwr\GameOfLive\ValueObject\Width;
 
 class BoardFactory
 {
