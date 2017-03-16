@@ -36,8 +36,22 @@ class LayoutTest extends TestCase
             new Longitude(3)
         );
 
+
         $this->assertTrue($cells[0]->position()->equals($position1));
         $this->assertTrue($cells[1]->position()->equals($position2));
         $this->assertTrue($cells[2]->position()->equals($position3));
+    }
+
+    public function testIfNumberOfLayoutCellsEqualsNumberOfCellsInArray()
+    {
+        $layoutArray = [
+            ["lat" => 1, "lon" => 1],
+            ["lat" => 2, "lon" => 2],
+            ["lat" => 3, "lon" => 3]
+        ];
+
+        $layout = new Layout($layoutArray);
+
+        $this->assertCount(3, $layout->getCells());
     }
 }
