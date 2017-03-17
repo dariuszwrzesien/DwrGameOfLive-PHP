@@ -5,7 +5,7 @@ namespace Dwr\GameOfLive\Entity;
 
 use Dwr\GameOfLive\Factory\BoardFactory;
 use Dwr\GameOfLive\Factory\LayoutFactory;
-use PHPUnit\Framework\Exception;
+use Dwr\GameOfLive\Validator\ValidatorInterface;
 
 class Template implements ValidateInterface
 {
@@ -20,6 +20,11 @@ class Template implements ValidateInterface
     private $board;
 
     /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * Template constructor.
      * @param string $jsonTemplate
      */
@@ -27,7 +32,7 @@ class Template implements ValidateInterface
     {
         $template = json_decode($jsonTemplate, true);
 
-        if (! $this->isValid($template)) {
+        if (! $this->isValidTemplate($template)) {
             throw new Exception('Incorrect json template');
         }
 
@@ -52,12 +57,19 @@ class Template implements ValidateInterface
     }
 
     /**
+     * @param ValidatorInterface $validator
+     */
+    public function setValidator(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
+
+    /**
      * @param array $data
      * @return bool
      */
-    public function isValid(array $data) : bool
+    public function isValid(array $data): bool
     {
-        //Implemenntacja walidacji
-        return true;
+        return $this->validator->isValid();
     }
 }
