@@ -5,7 +5,7 @@ namespace Dwr\GameOfLive\Policy;
 
 use Dwr\GameOfLive\ValueObject\Dimension;
 
-interface BoardPolicy
+interface BoardPolicyInterface
 {
     /**
      * Board constructor.

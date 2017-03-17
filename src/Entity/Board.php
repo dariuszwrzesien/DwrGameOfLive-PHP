@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Dwr\GameOfLive\Entity;
 
 use Dwr\GameOfLive\Policy\BoardPolicy;
+use Dwr\GameOfLive\Policy\BoardPolicyInterface;
 use Dwr\GameOfLive\ValueObject\Dimension;
 use LogicException;
 
-class Board implements BoardPolicy
+class Board implements BoardPolicyInterface
 {
     const MIN_LENGTH = 3;
     const MIN_WIDTH = 3;

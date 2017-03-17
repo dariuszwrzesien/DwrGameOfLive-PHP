@@ -23,6 +23,7 @@ class Game
     /**
      * Game constructor.
      * @param Template $template
+     * @param array $rules
      */
     public function __construct(Template $template, array $rules)
     {
