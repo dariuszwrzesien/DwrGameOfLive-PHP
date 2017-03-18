@@ -2,6 +2,8 @@
 
 namespace Dwr\GameOfLive\Entity;
 
+use Dwr\GameOfLive\Validator\ValidatorInterface;
+
 interface ValidateInterface
 {
     /**
@@ -10,8 +12,7 @@ interface ValidateInterface
     public function setValidator(ValidatorInterface $validator);
 
     /**
-     * @param array $data
      * @return bool
      */
-    public function isValid(array $data) : bool;
+    public function isValid() : bool;
 }

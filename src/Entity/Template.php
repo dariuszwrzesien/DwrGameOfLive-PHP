@@ -5,7 +5,9 @@ namespace Dwr\GameOfLive\Entity;
 
 use Dwr\GameOfLive\Factory\BoardFactory;
 use Dwr\GameOfLive\Factory\LayoutFactory;
+use Dwr\GameOfLive\Factory\ValidatorFactory;
 use Dwr\GameOfLive\Validator\ValidatorInterface;
+use Exception;
 
 class Template implements ValidateInterface
 {
@@ -27,12 +29,14 @@ class Template implements ValidateInterface
     /**
      * Template constructor.
      * @param string $jsonTemplate
+     * @throws Exception
      */
     public function __construct(string $jsonTemplate)
     {
         $template = json_decode($jsonTemplate, true);
+        $this->setValidator(ValidatorFactory::createTemplateValidator($template));
 
-        if (! $this->isValidTemplate($template)) {
+        if (! $this->isValid()) {
             throw new Exception('Incorrect json template');
         }
 
@@ -65,10 +69,9 @@ class Template implements ValidateInterface
     }
 
     /**
-     * @param array $data
      * @return bool
      */
-    public function isValid(array $data): bool
+    public function isValid() : bool
     {
         return $this->validator->isValid();
     }

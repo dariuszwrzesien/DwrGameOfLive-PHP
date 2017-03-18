@@ -80,4 +80,27 @@ class TemplateTest extends TestCase
 
         $this->assertEquals($board, $template->board());
     }
+    
+//    public function testIfTemplateIsValid()
+//    {
+//        $json = '{
+//            "board": {
+//                "length": 3,
+//                "width": 3
+//                },
+//                "layout": {
+//                    "1": {
+//                        "lat": 2,
+//                        "lon": 2
+//                    }
+//                }
+//            }';
+//
+//        $template = new Template($json);
+//
+//        var_dump($template);
+//        die(__FILE__ . ':'. __LINE__);
+//
+//        $this->assertTrue($template->isValid());
+//    }
 }

@@ -5,6 +5,7 @@ namespace Dwr\GameOfLive\Validator;
 
 use Dwr\GameOfLive\Entity\Board;
 use Dwr\GameOfLive\Entity\Layout;
+use Dwr\GameOfLive\Entity\Template;
 
 class TemplateValidator implements ValidatorInterface
 {
@@ -25,13 +26,15 @@ class TemplateValidator implements ValidatorInterface
 
     /**
      * TemplateValidator constructor.
-     * @param Board $board
-     * @param Layout $layout
+     * @param Template $template
      */
-    public function __construct(Board $board, Layout $layout)
+    public function __construct(array $template)
     {
-        $this->board = $board;
-        $this->layout = $layout;
+//        $this->checkStructure($template);
+
+
+        $this->board = $template->board();
+        $this->layout = $template->layout();
         $this->validate();
 
     }
