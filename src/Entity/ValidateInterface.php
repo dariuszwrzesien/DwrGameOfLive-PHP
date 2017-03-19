@@ -12,7 +12,8 @@ interface ValidateInterface
     public function setValidator(ValidatorInterface $validator);
 
     /**
+     * @param array $array
      * @return bool
      */
-    public function isValid() : bool;
+    public function isValid(array $array) : bool;
 }

@@ -34,10 +34,9 @@ class Template implements ValidateInterface
     public function __construct(string $jsonTemplate)
     {
         $template = json_decode($jsonTemplate, true);
-        $this->setValidator(ValidatorFactory::createTemplateValidator($template));
 
-        if (! $this->isValid()) {
-            throw new Exception('Incorrect json template');
+        if (! $this->isValid($template)) {
+            throw new Exception('Wrong json template data');
         }
 
         $this->board = BoardFactory::createBoard($template['board']);
@@ -69,10 +68,12 @@ class Template implements ValidateInterface
     }
 
     /**
+     * @param array $array
      * @return bool
      */
-    public function isValid() : bool
+    public function isValid(array $array) : bool
     {
+        $this->setValidator(ValidatorFactory::createTemplateValidator($array));
         return $this->validator->isValid();
     }
 }

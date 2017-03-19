@@ -5,7 +5,7 @@ namespace Dwr\GameOfLive\Validator;
 
 use Dwr\GameOfLive\Entity\Board;
 use Dwr\GameOfLive\Entity\Layout;
-use Dwr\GameOfLive\Entity\Template;
+use Exception;
 
 class TemplateValidator implements ValidatorInterface
 {
@@ -26,27 +26,48 @@ class TemplateValidator implements ValidatorInterface
 
     /**
      * TemplateValidator constructor.
-     * @param Template $template
+     * @param array $template
+     * @throws Exception
      */
     public function __construct(array $template)
     {
-//        $this->checkStructure($template);
+        if (! $this->isStructureCorrect($template)) {
+            throw new Exception('Wrong json template structure');
+        }
 
-
-        $this->board = $template->board();
-        $this->layout = $template->layout();
+        $this->board = $template['board'];
+        $this->layout = $template['layout'];
         $this->validate();
 
+
+    }
+
+    private function isStructureCorrect(array $template)
+    {
+        if (array_key_exists('board', $template)
+        && array_key_exists('layout', $template)
+        ) {
+            if (array_key_exists('length', $template['board'])
+                && array_key_exists('width', $template['board'])) {
+                foreach ($template['layout'] as $position) {
+                    if (! array_key_exists('lat', $position)
+                        || ! array_key_exists('lon', $position)) {
+                            return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 
     private function validate()
     {
-        if ($this->isCellLatitudeLesserOrEqualsBoardWidth() &&
-            $this->isCellLongitudeLesserOrEqualsBoardLength()) {
-            $this->isValid = true;
-        }
-
-        $this->isValid = false;
+//        if ($this->isCellLatitudeLesserOrEqualsBoardWidth() &&
+//            $this->isCellLongitudeLesserOrEqualsBoardLength()) {
+//            $this->isValid = true;
+//        }
+//
+//        $this->isValid = false;
     }
 
     /**
@@ -86,6 +107,9 @@ class TemplateValidator implements ValidatorInterface
      */
     public function isValid() : bool
     {
+        return true;
+
+
         return $this->isValid;
     }
 }
