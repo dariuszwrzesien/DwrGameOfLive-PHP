@@ -7,7 +7,7 @@ use Dwr\GameOfLive\Entity\Board;
 use Dwr\GameOfLive\Entity\Layout;
 use Exception;
 
-class TemplateValidator implements ValidatorInterface
+final class TemplateValidator implements ValidatorInterface
 {
     /**
      * @var Board
@@ -22,7 +22,7 @@ class TemplateValidator implements ValidatorInterface
     /**
      * @var bool
      */
-    private $isValid = false;
+    private $isValid;
 
     /**
      * TemplateValidator constructor.
@@ -37,9 +37,6 @@ class TemplateValidator implements ValidatorInterface
 
         $this->board = $template['board'];
         $this->layout = $template['layout'];
-        $this->validate();
-
-
     }
 
     private function isStructureCorrect(array $template)
@@ -60,25 +57,16 @@ class TemplateValidator implements ValidatorInterface
         }
     }
 
-    private function validate()
-    {
-//        if ($this->isCellLatitudeLesserOrEqualsBoardWidth() &&
-//            $this->isCellLongitudeLesserOrEqualsBoardLength()) {
-//            $this->isValid = true;
-//        }
-//
-//        $this->isValid = false;
-    }
-
     /**
      * @return bool
      */
     private function isCellLatitudeLesserOrEqualsBoardWidth()
     {
-        $width = $this->board->dimension()->width()->value();
+        $width = $this->board['width'];
 
-        foreach ($this->layout->getCells() as $cell) {
-            if ($cell->position()->latitude()->value() >= $width) {
+        foreach ($this->layout as $cell) {
+            if ($cell['lat'] >= $width) {
+
                 return false;
             }
         }
@@ -91,10 +79,11 @@ class TemplateValidator implements ValidatorInterface
      */
     private function isCellLongitudeLesserOrEqualsBoardLength()
     {
-        $length = $this->board->dimension()->length()->value();
+        $length = $this->board['length'];
 
-        foreach ($this->layout->getCells() as $cell) {
-            if ($cell->position()->longitude()->value() >= $length) {
+        foreach ($this->layout as $cell) {
+            if ($cell['lon'] >= $length) {
+
                 return false;
             }
         }
@@ -107,9 +96,12 @@ class TemplateValidator implements ValidatorInterface
      */
     public function isValid() : bool
     {
-        return true;
+        if ($this->isCellLatitudeLesserOrEqualsBoardWidth() &&
+            $this->isCellLongitudeLesserOrEqualsBoardLength()) {
 
+            return true;
+        }
 
-        return $this->isValid;
+        return false;
     }
 }
