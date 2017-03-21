@@ -6,7 +6,6 @@ namespace Dwr\GameOfLive\Entity;
 use Dwr\GameOfLive\ValueObject\Dimension;
 use Dwr\GameOfLive\ValueObject\Length;
 use Dwr\GameOfLive\ValueObject\Width;
-use Dwr\GameOfLive\Exception\TemplateException;
 use PHPUnit\Framework\TestCase;
 
 class TemplateTest extends TestCase
@@ -72,8 +71,8 @@ class TemplateTest extends TestCase
 
         $board = new Board(
             new Dimension(
-                new Length(3),
-                new Width(3)
+            new Length(3),
+            new Width(3)
             )
         );
 
@@ -83,35 +82,39 @@ class TemplateTest extends TestCase
     }
 
     /**
-     * @dataProvider validTemplateProvider
      * @param string $json
+     * @param int $length
+     * @param int $width
+     *
+     * @dataProvider validTemplateProvider
      */
-//    public function testIfTemplateIsValid(string $json)
-//    {
-//        $template = new Template($json);
-//        $this->assert();
-//    }
+    public function testIfTemplateIsValid(string $json, int $length, int $width)
+    {
+        $template = new Template($json);
+        $this->assertSame($length, $template->board()->dimension()->length()->value());
+        $this->assertSame($width, $template->board()->dimension()->width()->value());
+    }
 
     /**
-     * @dataProvider invalidTemplateProvider
+     * @dataProvider invalidDataTemplateProvided
      * @param string $json
      *
-     * @expectedException TemplateException
+     * @expectedException \Dwr\GameOfLive\Exception\BadTemplateDataException
      * @expectedExceptionMessage Wrong json template data.
      */
-    public function testIfTemplateHasInValidData(string $json)
+    public function testIfTemplateHasInvalidData(string $json)
     {
         new Template($json);
     }
 
     /**
-     * @dataProvider invalidDataTemplateProvider
+     * @dataProvider invalidStructureTemplateProvided
      * @param string $json
      *
-     * @expectedException TemplateException
+     * @expectedException \Dwr\GameOfLive\Exception\BadTemplateStructureException
      * @expectedExceptionMessage Wrong json template structure.
      */
-    public function testIfTemplateHasInValidStructure(string $json)
+    public function testIfTemplateHasInvalidStructure(string $json)
     {
         new Template($json);
     }
@@ -119,23 +122,24 @@ class TemplateTest extends TestCase
     public function validTemplateProvider()
     {
         return [
-            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"lat": 2,"lon": 2}}}']
+            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"lat": 2,"lon": 2}}}', 3, 3],
+            ['{"board": {"length": 10,"width": 15},"layout": {"1": {"lat": 14,"lon": 9}}}', 10, 15]
         ];
     }
 
-    public function invalidDataTemplateProvider()
+    public function invalidDataTemplateProvided()
     {
         return [
             ['{"board": {"length": 3,"width": 3},"layout": {"1": {"lat": 4,"lon": 5}}}']
         ];
     }
 
-    public function invalidStructureTemplateProvider()
+    public function invalidStructureTemplateProvided()
     {
         return [
-            ['{"board": {"l": 3,"w": 3},"layout": {"1": {"lat": 4,"lon": 5}}}'],
-            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"latitude": 4,"long": 5}}}'],
-            ['{"board": {"length": 3,"width": 3},"layout": {}'],
+            ['{"board": {"l": 3,"w": 3},"layout": {"1": {"lat": 2,"lon": 2}}}'],
+            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"latitude": 1,"long": 1}}}'],
+            ['{"board": {"length": 3,"width": 3},"layout": {"1":{}, "2": {"latitude": 1,"long": 1}}}'],
             ['{"board": {},"layout": {"1": {"latitude": 4,"long": 5}}}'],
         ];
     }

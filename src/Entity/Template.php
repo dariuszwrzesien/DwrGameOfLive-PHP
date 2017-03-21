@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\Entity;
 
-use Dwr\GameOfLive\Exception\TemplateException;
+use Dwr\GameOfLive\Exception\BadTemplateDataException;
 use Dwr\GameOfLive\Factory\BoardFactory;
 use Dwr\GameOfLive\Factory\LayoutFactory;
 use Dwr\GameOfLive\Factory\ValidatorFactory;
@@ -29,14 +29,14 @@ class Template implements ValidateInterface
     /**
      * Template constructor.
      * @param string $jsonTemplate
-     * @throws TemplateException
+     * @throws BadTemplateDataException
      */
     public function __construct(string $jsonTemplate)
     {
         $template = json_decode($jsonTemplate, true);
 
         if (! $this->isValid($template)) {
-            throw new TemplateException('Wrong json template data.');
+            throw new BadTemplateDataException('Wrong json template data.');
         }
 
         $this->board = BoardFactory::createBoard($template['board']);
