@@ -5,7 +5,7 @@ namespace Dwr\GameOfLive\Validator;
 
 use Dwr\GameOfLive\Entity\Board;
 use Dwr\GameOfLive\Entity\Layout;
-use Exception;
+use Dwr\GameOfLive\Exception\TemplateException;
 
 final class TemplateValidator implements ValidatorInterface
 {
@@ -27,12 +27,12 @@ final class TemplateValidator implements ValidatorInterface
     /**
      * TemplateValidator constructor.
      * @param array $template
-     * @throws Exception
+     * @throws TemplateException
      */
     public function __construct(array $template)
     {
         if (! $this->isStructureCorrect($template)) {
-            throw new Exception('Wrong json template structure');
+            throw new TemplateException('Wrong json template structure.');
         }
 
         $this->board = $template['board'];

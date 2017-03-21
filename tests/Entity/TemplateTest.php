@@ -6,6 +6,7 @@ namespace Dwr\GameOfLive\Entity;
 use Dwr\GameOfLive\ValueObject\Dimension;
 use Dwr\GameOfLive\ValueObject\Length;
 use Dwr\GameOfLive\ValueObject\Width;
+use Dwr\GameOfLive\Exception\TemplateException;
 use PHPUnit\Framework\TestCase;
 
 class TemplateTest extends TestCase
@@ -80,23 +81,62 @@ class TemplateTest extends TestCase
 
         $this->assertEquals($board, $template->board());
     }
-    
-    public function testIfTemplateIsValid()
-    {
-        $json = '{
-            "board": {
-                "length": 3,
-                "width": 3
-                },
-                "layout": {
-                    "1": {
-                        "lat": 2,
-                        "lon": 2
-                    }
-                }
-            }';
 
-        $template = new Template($json);
-        $this->assertTrue($template->isValid(json_decode($json, true)));
+    /**
+     * @dataProvider validTemplateProvider
+     * @param string $json
+     */
+//    public function testIfTemplateIsValid(string $json)
+//    {
+//        $template = new Template($json);
+//        $this->assert();
+//    }
+
+    /**
+     * @dataProvider invalidTemplateProvider
+     * @param string $json
+     *
+     * @expectedException TemplateException
+     * @expectedExceptionMessage Wrong json template data.
+     */
+    public function testIfTemplateHasInValidData(string $json)
+    {
+        new Template($json);
+    }
+
+    /**
+     * @dataProvider invalidDataTemplateProvider
+     * @param string $json
+     *
+     * @expectedException TemplateException
+     * @expectedExceptionMessage Wrong json template structure.
+     */
+    public function testIfTemplateHasInValidStructure(string $json)
+    {
+        new Template($json);
+    }
+
+    public function validTemplateProvider()
+    {
+        return [
+            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"lat": 2,"lon": 2}}}']
+        ];
+    }
+
+    public function invalidDataTemplateProvider()
+    {
+        return [
+            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"lat": 4,"lon": 5}}}']
+        ];
+    }
+
+    public function invalidStructureTemplateProvider()
+    {
+        return [
+            ['{"board": {"l": 3,"w": 3},"layout": {"1": {"lat": 4,"lon": 5}}}'],
+            ['{"board": {"length": 3,"width": 3},"layout": {"1": {"latitude": 4,"long": 5}}}'],
+            ['{"board": {"length": 3,"width": 3},"layout": {}'],
+            ['{"board": {},"layout": {"1": {"latitude": 4,"long": 5}}}'],
+        ];
     }
 }
