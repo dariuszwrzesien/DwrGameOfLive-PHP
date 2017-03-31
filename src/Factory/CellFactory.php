@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Dwr\GameOfLive\Factory;
 
@@ -13,7 +14,7 @@ class CellFactory
      * @param array $data
      * @return Cell
      */
-    public static function createCell(array $data)
+    public static function createCell(array $data) : Cell
     {
         $latitude = new Latitude($data['lat']);
         $longitude = new Longitude($data['lon']);

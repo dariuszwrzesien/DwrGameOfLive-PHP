@@ -10,7 +10,7 @@ class LayoutFactory
      * @param array $data
      * @return Layout
      */
-    public static function createLayout(array $data)
+    public static function createLayout(array $data) : Layout
     {
         return new Layout($data);
     }
