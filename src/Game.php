@@ -24,7 +24,6 @@ class Game
      */
     private $rule;
 
-
     /**
      * Game constructor.
      * @param Template $template
@@ -39,12 +38,24 @@ class Game
 
     /**
      * Runs the game
+     *
+     * @param int $howManySteps
      */
-    public function run()
+    public function run(int $howManySteps)
     {
-        foreach ($this->rule as $rule) {
-            $this->updateLayout($rule);
+        while ($howManySteps > 0) {
+            $this->updateLayout($this->rule, $this->layout);
+            $howManySteps--;
         }
+    }
+
+    /**
+     * @param RuleInterface $rule
+     * @param Layout $layout
+     */
+    private function updateLayout(RuleInterface $rule, Layout $layout)
+    {
+
     }
 
     /**

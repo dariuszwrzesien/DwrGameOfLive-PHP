@@ -5,33 +5,46 @@ namespace Dwr\GameOfLive\Rules;
 
 use Dwr\GameOfLive\Entity\Layout;
 
-class ConwayRules implements RuleInterface
+final class ConwayRules implements RuleInterface
 {
-//    private $cellsPositions = [];
-//
-//    public function __construct(Layout $layout)
-//    {
-//        foreach ($layout->getCells() as $cell) {
-//            $this->cellsPositions = $cell->getPosition();
-//        }
-//    }
+    /**
+     * @var Layout
+     */
+    private $layout;
+
+    /**
+     * @param Layout $layout
+     */
+    public function checkRules(Layout $layout)
+    {
+        $this->layout = $layout;
+
+        $cellsPositions = [];
+        foreach ($layout->getCells() as $cell) {
+            $cellsPositions[] = $cell->getPosition();
+        }
+
+        $this->underPopulation($cellsPositions);
+    }
 
     /**
      * Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+     *
+     * @param array $cellsPositions
      */
-    public function underPopulation()
+    private function underPopulation(array $cellsPositions)
     {
-//        foreach ($this->cellsPositions as $position) {
-//            var_dump($position);
-//        }
-//
-//        die(__FILE__ . ':'. __LINE__);
+        foreach ($cellsPositions as $position) {
+            var_dump($position);
+        }
+
+        die(__FILE__ . ':'. __LINE__);
     }
 
     /**
      * Any live cell with two or three live neighbours lives on to the next generation.
      */
-    public function stayLive()
+    private function stayLive()
     {
 
     }
@@ -39,7 +52,7 @@ class ConwayRules implements RuleInterface
     /**
      * Any live cell with more than three live neighbours dies, as if by overpopulation.
      */
-    public function overPopulation()
+    private function overPopulation()
     {
 
     }
@@ -47,7 +60,7 @@ class ConwayRules implements RuleInterface
     /**
      * Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
      */
-    public function reproduction()
+    private function reproduction()
     {
 
     }

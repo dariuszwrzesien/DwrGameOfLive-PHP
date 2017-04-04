@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase
 {
-    public function testIfOneRunOnDotTemplateReturnsEmptyLayout()
+    public function testIfOneRunOnDotTemplateReturnsEmptyLayoutBecauseOfUnderPopulation()
     {
         $jsonTemplate = '{
             "board": {
@@ -26,11 +26,13 @@ class GameTest extends TestCase
 
         $template = new Template($jsonTemplate);
         $game = new Game($template, new ConwayRules());
-        $game->run();
+        $game->run(1);
 
         foreach ($game->getLayout()->getCells() as $cell) {
-            var_dump($cell->position());
+            var_dump($cell->position()->latitude()->value());
+            var_dump($cell->position()->longitude()->value());
         }
+
         die(__FILE__ . ':'. __LINE__);
 
 
