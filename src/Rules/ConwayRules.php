@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\Rules;
 
+use Dwr\GameOfLive\Entity\Cell;
 use Dwr\GameOfLive\Entity\Layout;
 
 final class ConwayRules implements RuleInterface
@@ -19,26 +20,27 @@ final class ConwayRules implements RuleInterface
     {
         $this->layout = $layout;
 
-        $cellsPositions = [];
-        foreach ($layout->getCells() as $cell) {
-            $cellsPositions[] = $cell->getPosition();
+        foreach ($layout->getCells() as $key => $cell) {
+            $this->underPopulation($key, $cell);
         }
 
-        $this->underPopulation($cellsPositions);
+        return $this->layout;
+
+
     }
 
     /**
      * Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
      *
-     * @param array $cellsPositions
+     * @param int $cellIndex
+     * @param Cell $cell
      */
-    private function underPopulation(array $cellsPositions)
+    private function underPopulation(int $cellIndex, Cell $cell)
     {
-        foreach ($cellsPositions as $position) {
-            var_dump($position);
-        }
 
-        die(__FILE__ . ':'. __LINE__);
+        if (count($this->layout->getNeighbours($cell)) < 2) {
+            $this->layout->removeCell($cellIndex);
+        }
     }
 
     /**
@@ -64,4 +66,6 @@ final class ConwayRules implements RuleInterface
     {
 
     }
+
+    
 }

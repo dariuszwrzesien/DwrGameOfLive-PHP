@@ -52,10 +52,12 @@ class Game
     /**
      * @param RuleInterface $rule
      * @param Layout $layout
+     *
+     * @return Layout
      */
-    private function updateLayout(RuleInterface $rule, Layout $layout)
+    private function updateLayout(RuleInterface $rule, Layout $layout) : Layout
     {
-
+        return $rule->checkRules($layout);
     }
 
     /**

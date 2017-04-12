@@ -51,6 +51,7 @@ class TemplateTest extends TestCase
         $layout = new Layout([$cell]);
         $template = new Template($json);
 
+        $this->assertInstanceOf(Layout::class, $template->layout());
         $this->assertEquals($layout, $template->layout());
     }
 

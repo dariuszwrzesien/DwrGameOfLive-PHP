@@ -28,13 +28,6 @@ class GameTest extends TestCase
         $game = new Game($template, new ConwayRules());
         $game->run(1);
 
-        foreach ($game->getLayout()->getCells() as $cell) {
-            var_dump($cell->position()->latitude()->value());
-            var_dump($cell->position()->longitude()->value());
-        }
-
-        die(__FILE__ . ':'. __LINE__);
-
-
+        $this->assertEquals(0, count($game->getLayout()->getCells()));
     }
 }
