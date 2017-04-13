@@ -46,37 +46,14 @@ class Layout
             $neighbourLatitude = $cell->position()->latitude()->value();
             $neighbourLongitude = $cell->position()->longitude()->value();
 
-            if ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === ($longitude - 1)) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === $longitude) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === ($longitude + 1)) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === $latitude && $neighbourLongitude === ($longitude - 1)) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === $latitude && $neighbourLongitude === ($longitude + 1)) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === ($longitude - 1)) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === $longitude) {
-                $neighbours[] = $cell;
-            }
-
-            if ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === ($longitude + 1)) {
-                $neighbours[] = $cell;
-            }
+            ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === ($longitude - 1)) ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === $longitude)       ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === ($longitude + 1)) ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === $latitude       && $neighbourLongitude === ($longitude - 1)) ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === $latitude       && $neighbourLongitude === ($longitude + 1)) ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === ($longitude - 1)) ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === $longitude)       ? $neighbours[] = $cell : null;
+            ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === ($longitude + 1)) ? $neighbours[] = $cell : null;
         }
 
         return $neighbours;
