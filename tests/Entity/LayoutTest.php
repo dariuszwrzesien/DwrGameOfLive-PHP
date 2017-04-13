@@ -54,4 +54,54 @@ class LayoutTest extends TestCase
 
         $this->assertCount(3, $layout->getCells());
     }
+
+    /**
+     *
+     * @dataProvider layoutProvider
+     *
+     * @param $layoutArray
+     * @param $expect
+     */
+    public function testIfGetNeighboursReturnCorrectValues($layoutArray, $expect)
+    {
+        $position = new Position(new Latitude(2), new Longitude(2));
+        $cell = new Cell($position);
+        $layout = new Layout($layoutArray);
+
+        $this->assertCount($expect, $layout->getNeighbours($cell));
+    }
+
+    public function layoutProvider()
+    {
+        return [
+            [[
+                ["lat" => 1, "lon" => 1],
+                ["lat" => 2, "lon" => 2]
+            ], 1],
+            [[
+                ["lat" => 1, "lon" => 1],
+                ["lat" => 1, "lon" => 2],
+                ["lat" => 2, "lon" => 2],
+                ["lat" => 4, "lon" => 2]
+            ], 2],
+            [[
+                ["lat" => 1, "lon" => 1],
+                ["lat" => 1, "lon" => 2],
+                ["lat" => 1, "lon" => 3],
+                ["lat" => 2, "lon" => 1],
+                ["lat" => 2, "lon" => 3],
+                ["lat" => 3, "lon" => 1],
+                ["lat" => 3, "lon" => 2],
+                ["lat" => 3, "lon" => 3]
+            ], 8],
+            [[
+                ["lat" => 1, "lon" => 4],
+                ["lat" => 5, "lon" => 2],
+                ["lat" => 6, "lon" => 3],
+                ["lat" => 1, "lon" => 4],
+            ], 0],
+        ];
+    }
+
+
 }
