@@ -34,26 +34,30 @@ class Layout
 
     /**
      * @param Cell $cell
-     * @return array
+     * @return int
      */
-    public function getNeighbours(Cell $cell)
+    public function countNeighbours(Cell $cell)
     {
-        $latitude = $cell->position()->latitude()->value();
-        $longitude = $cell->position()->longitude()->value();
+        $x = $cell->position()->latitude()->value();
+        $y = $cell->position()->longitude()->value();
 
-        $neighbours = [];
+        $neighbourMesh = [
+            [-1, -1], [-1, 0], [-1, 1],
+            [ 0, -1],          [ 0, 1],
+            [ 1, -1], [ 1, 0], [ 1, 1]
+        ];
+
+        $neighbours = 0;
         foreach ($this->cells as $cell) {
-            $neighbourLatitude = $cell->position()->latitude()->value();
-            $neighbourLongitude = $cell->position()->longitude()->value();
 
-            ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === ($longitude - 1)) ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === $longitude)       ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === ($latitude - 1) && $neighbourLongitude === ($longitude + 1)) ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === $latitude       && $neighbourLongitude === ($longitude - 1)) ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === $latitude       && $neighbourLongitude === ($longitude + 1)) ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === ($longitude - 1)) ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === $longitude)       ? $neighbours[] = $cell : null;
-            ($neighbourLatitude === ($latitude + 1) && $neighbourLongitude === ($longitude + 1)) ? $neighbours[] = $cell : null;
+            $xNeighbour = $cell->position()->latitude()->value();
+            $yNeighbour = $cell->position()->longitude()->value();
+
+            foreach ($neighbourMesh as $offset) {
+                if ($xNeighbour + $offset[0] === $x && $yNeighbour + $offset[1] === $y) {
+                    $neighbours++;
+                }
+            }
         }
 
         return $neighbours;

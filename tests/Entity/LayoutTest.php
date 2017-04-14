@@ -68,7 +68,7 @@ class LayoutTest extends TestCase
         $cell = new Cell($position);
         $layout = new Layout($layoutArray);
 
-        $this->assertCount($expect, $layout->getNeighbours($cell));
+        $this->assertEquals($expect, $layout->countNeighbours($cell));
     }
 
     public function layoutProvider()

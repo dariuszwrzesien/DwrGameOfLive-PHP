@@ -15,6 +15,7 @@ final class ConwayRules implements RuleInterface
 
     /**
      * @param Layout $layout
+     * @return Layout
      */
     public function checkRules(Layout $layout)
     {
@@ -38,7 +39,7 @@ final class ConwayRules implements RuleInterface
     private function underPopulation(int $cellIndex, Cell $cell)
     {
 
-        if (count($this->layout->getNeighbours($cell)) < 2) {
+        if ($this->layout->countNeighbours($cell) < 2) {
             $this->layout->removeCell($cellIndex);
         }
     }
