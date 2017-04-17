@@ -6,6 +6,16 @@ namespace Dwr\GameOfLive\Rules;
 use Dwr\GameOfLive\Entity\Cell;
 use Dwr\GameOfLive\Entity\Layout;
 
+/**
+ * Class ConwayRules
+ *
+ * 1. Any live cell with fewer than two live neighbours dies, as if caused by underpopulation. [underPopulation]
+ * 2. Any live cell with more than three live neighbours dies, as if by overpopulation. [overpopulation]
+ * 3. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction. [reproduction]
+ * 4. Any live cell with two or three live neighbours lives on to the next generation. [do not have to be implemented]
+ *
+ * @package Dwr\GameOfLive\Rules
+ */
 final class ConwayRules implements RuleInterface
 {
     /**
@@ -23,11 +33,10 @@ final class ConwayRules implements RuleInterface
 
         foreach ($layout->getCells() as $key => $cell) {
             $this->underPopulation($key, $cell);
+            $this->overPopulation($key, $cell);
         }
 
         return $this->layout;
-
-
     }
 
     /**
@@ -38,26 +47,22 @@ final class ConwayRules implements RuleInterface
      */
     private function underPopulation(int $cellIndex, Cell $cell)
     {
-
         if ($this->layout->countNeighbours($cell) < 2) {
             $this->layout->removeCell($cellIndex);
         }
     }
 
     /**
-     * Any live cell with two or three live neighbours lives on to the next generation.
-     */
-    private function stayLive()
-    {
-
-    }
-
-    /**
      * Any live cell with more than three live neighbours dies, as if by overpopulation.
+     *
+     * @param int $cellIndex
+     * @param Cell $cell
      */
-    private function overPopulation()
+    private function overPopulation(int $cellIndex, Cell $cell)
     {
-
+        if ($this->layout->countNeighbours($cell) > 3) {
+            $this->layout->removeCell($cellIndex);
+        }
     }
 
     /**
