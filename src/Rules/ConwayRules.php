@@ -24,6 +24,11 @@ final class ConwayRules implements RuleInterface
     private $layout;
 
     /**
+     * @var array
+     */
+    private $operations = [];
+
+    /**
      * @param Layout $layout
      * @return Layout
      */
@@ -35,6 +40,9 @@ final class ConwayRules implements RuleInterface
             $this->underPopulation($key, $cell);
             $this->overPopulation($key, $cell);
         }
+
+        $this->reproduction();
+        $this->apply();
 
         return $this->layout;
     }
@@ -48,7 +56,7 @@ final class ConwayRules implements RuleInterface
     private function underPopulation(int $cellIndex, Cell $cell)
     {
         if ($this->layout->countNeighbours($cell) < 2) {
-            $this->layout->removeCell($cellIndex);
+            $this->operations[] = ['removeCell' => $cellIndex];
         }
     }
 
@@ -61,7 +69,7 @@ final class ConwayRules implements RuleInterface
     private function overPopulation(int $cellIndex, Cell $cell)
     {
         if ($this->layout->countNeighbours($cell) > 3) {
-            $this->layout->removeCell($cellIndex);
+            $this->operations[] = ['removeCell' => $cellIndex];
         }
     }
 
@@ -70,8 +78,20 @@ final class ConwayRules implements RuleInterface
      */
     private function reproduction()
     {
-
+//        if ($this->layout->countNeighboursOfCellZone($cell) === 3) {
+//            $this->action[] = ['addCell' => $coordinate];
+//        }
     }
 
-    
+    /**
+     * Applies changes to layout
+     */
+    private function apply()
+    {
+        foreach ($this->operations as $actions) {
+            foreach ($actions as $action => $item) {
+                $this->layout->$action($item);
+            }
+        }
+    }
 }

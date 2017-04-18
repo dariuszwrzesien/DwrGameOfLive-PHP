@@ -19,8 +19,8 @@ class Layout
     public function __construct(array $layout)
     {
         $this->cells = [];
-        foreach ($layout as $item) {
-            $this->cells[] = CellFactory::createCell($item);
+        foreach ($layout as $coordinate) {
+            $this->cells[] = CellFactory::createCell($coordinate);
         }
     }
 
@@ -49,7 +49,6 @@ class Layout
 
         $neighbours = 0;
         foreach ($this->cells as $cell) {
-
             $xNeighbour = $cell->position()->latitude()->value();
             $yNeighbour = $cell->position()->longitude()->value();
 
@@ -61,6 +60,14 @@ class Layout
         }
 
         return $neighbours;
+    }
+
+    /**
+     * @param array $coordinate
+     */
+    public function addCell(array $coordinate)
+    {
+        $this->cells[] = CellFactory::createCell($coordinate);
     }
 
     /**

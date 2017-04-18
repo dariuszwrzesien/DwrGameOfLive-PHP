@@ -9,6 +9,8 @@ use Dwr\GameOfLive\Rules\RuleInterface;
 
 class Game
 {
+    const DEFAULT_RUNS_NUMBER = 1;
+
     /**
      * @var Board
      */
@@ -41,7 +43,7 @@ class Game
      *
      * @param int $howManySteps
      */
-    public function run(int $howManySteps = 1)
+    public function run(int $howManySteps = self::DEFAULT_RUNS_NUMBER)
     {
         while ($howManySteps > 0) {
             $this->updateLayout($this->rule, $this->layout);
