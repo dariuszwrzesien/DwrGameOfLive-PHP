@@ -41,7 +41,7 @@ class Game
      *
      * @param int $howManySteps
      */
-    public function run(int $howManySteps)
+    public function run(int $howManySteps = 1)
     {
         while ($howManySteps > 0) {
             $this->updateLayout($this->rule, $this->layout);

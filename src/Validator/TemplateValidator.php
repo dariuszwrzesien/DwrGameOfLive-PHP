@@ -34,22 +34,62 @@ final class TemplateValidator implements ValidatorInterface
         $this->layout = $template['layout'];
     }
 
+    /**
+     * @param array $template
+     * @return bool
+     */
     private function isStructureCorrect(array $template)
     {
-        if (array_key_exists('board', $template)
-        && array_key_exists('layout', $template)
-        ) {
-            if (array_key_exists('length', $template['board'])
-                && array_key_exists('width', $template['board'])) {
+        if ($this->hasTemplateRequiredNodes($template)) {
+            if ($this->hasBoardRequiredNodes($template['board'])) {
                 foreach ($template['layout'] as $position) {
-                    if (! array_key_exists('lat', $position)
-                        || ! array_key_exists('lon', $position)) {
-                            return false;
+                    if (! $this->isPositionInsideLayout($position)) {
+                        return false;
                     }
                 }
                 return true;
             }
         }
+    }
+
+    /**
+     * @param array $template
+     * @return bool
+     */
+    private function hasTemplateRequiredNodes(array $template) : bool
+    {
+        return array_key_exists('board', $template) && array_key_exists('layout', $template);
+    }
+
+    /**
+     * @param array $board
+     * @return bool
+     */
+    private function hasBoardRequiredNodes(array $board) : bool
+    {
+        return array_key_exists('length', $board) && array_key_exists('width', $board);
+    }
+
+    /**
+     * @param array $position
+     * @return bool
+     */
+    private function isPositionInsideLayout(array $position) : bool
+    {
+        return array_key_exists('lat', $position) && array_key_exists('lon', $position);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid() : bool
+    {
+        if ($this->isCellLatitudeLesserOrEqualsBoardWidth() &&
+            $this->isCellLongitudeLesserOrEqualsBoardLength()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -61,7 +101,6 @@ final class TemplateValidator implements ValidatorInterface
 
         foreach ($this->layout as $cell) {
             if ($cell['lat'] >= $width) {
-
                 return false;
             }
         }
@@ -78,25 +117,10 @@ final class TemplateValidator implements ValidatorInterface
 
         foreach ($this->layout as $cell) {
             if ($cell['lon'] >= $length) {
-
                 return false;
             }
         }
 
         return true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isValid() : bool
-    {
-        if ($this->isCellLatitudeLesserOrEqualsBoardWidth() &&
-            $this->isCellLongitudeLesserOrEqualsBoardLength()) {
-
-            return true;
-        }
-
-        return false;
     }
 }
