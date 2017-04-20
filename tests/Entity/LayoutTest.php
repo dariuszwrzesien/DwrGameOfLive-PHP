@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Dwr\GameOfLive\Entity;
 
+use Dwr\GameOfLive\Factory\CellFactory;
 use Dwr\GameOfLive\ValueObject\Latitude;
 use Dwr\GameOfLive\ValueObject\Longitude;
 use Dwr\GameOfLive\ValueObject\Position;
@@ -103,5 +104,58 @@ class LayoutTest extends TestCase
         ];
     }
 
+    public function testRemoveCellFromLayout()
+    {
+        $schema = [
+            ["lat" => 1, "lon" => 1],
+            ["lat" => 1, "lon" => 2],
+            ["lat" => 1, "lon" => 3],
+            ["lat" => 2, "lon" => 1],
+            ["lat" => 2, "lon" => 3],
+            ["lat" => 3, "lon" => 1],
+            ["lat" => 3, "lon" => 2],
+            ["lat" => 3, "lon" => 3]
+        ];
 
+        $layout = new Layout($schema);
+        $this->assertCount(8, $layout->getCells());
+
+        $layout->removeCell(0);
+        $this->assertCount(7, $layout->getCells());
+
+        $layout->removeCell(2);
+        $this->assertCount(6, $layout->getCells());
+
+        $layout->removeCell(3);
+        $layout->removeCell(4);
+        $layout->removeCell(5);
+        $layout->removeCell(6);
+        $layout->removeCell(7);
+        $this->assertCount(1, $layout->getCells());
+
+        $cell = CellFactory::createCell(["lat" => 1, "lon" => 2]);
+        $remainingCell = $layout->getCells()[1]; //index [1] hasn't been removed previously
+
+        $this->assertEquals($cell->position(), $remainingCell->position());
+
+    }
+
+    public function testAddCellToLayout()
+    {
+        $schema = [
+            ["lat" => 1, "lon" => 1]
+        ];
+
+        $layout = new Layout($schema);
+        $this->assertCount(1, $layout->getCells());
+
+        $coordinateForNewCell = ["lat" => 2, "lon" => 2];
+        $layout->addCell($coordinateForNewCell);
+        $this->assertCount(2, $layout->getCells());
+
+        $cell = CellFactory::createCell($coordinateForNewCell);
+        $newCell = $layout->getCells()[1];
+
+        $this->assertEquals($cell->position(), $newCell->position());
+    }
 }
