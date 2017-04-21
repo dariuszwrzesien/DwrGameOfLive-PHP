@@ -69,7 +69,7 @@ class LayoutTest extends TestCase
         $cell = new Cell($position);
         $layout = new Layout($layoutArray);
 
-        $this->assertEquals($expect, $layout->countNeighbours($cell));
+        $this->assertEquals($expect, $layout->countLiveNeighbours($cell));
     }
 
     public function layoutProvider()

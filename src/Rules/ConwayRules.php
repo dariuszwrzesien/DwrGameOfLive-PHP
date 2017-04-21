@@ -39,9 +39,9 @@ final class ConwayRules implements RuleInterface
         foreach ($layout->getCells() as $key => $cell) {
             $this->underPopulation($key, $cell);
             $this->overPopulation($key, $cell);
+            $this->reproduction($cell);
         }
 
-        $this->reproduction();
         $this->apply();
 
         return $this->layout;
@@ -55,7 +55,7 @@ final class ConwayRules implements RuleInterface
      */
     private function underPopulation(int $cellIndex, Cell $cell)
     {
-        if ($this->layout->countNeighbours($cell) < 2) {
+        if ($this->layout->countLiveNeighbours($cell) < 2) {
             $this->operations[] = ['removeCell' => $cellIndex];
         }
     }
@@ -68,7 +68,7 @@ final class ConwayRules implements RuleInterface
      */
     private function overPopulation(int $cellIndex, Cell $cell)
     {
-        if ($this->layout->countNeighbours($cell) > 3) {
+        if ($this->layout->countLiveNeighbours($cell) > 3) {
             $this->operations[] = ['removeCell' => $cellIndex];
         }
     }
@@ -76,8 +76,9 @@ final class ConwayRules implements RuleInterface
     /**
      * Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
      */
-    private function reproduction()
+    private function reproduction(Cell $cell)
     {
+        $deadCells = $this->layout->countDeadNeighbours($cell);
 //        if ($this->layout->countNeighboursOfCellZone($cell) === 3) {
 //            $this->action[] = ['addCell' => $coordinate];
 //        }
